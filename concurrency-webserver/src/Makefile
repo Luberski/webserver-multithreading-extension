@@ -2,7 +2,7 @@
 # To compile, type "make" or make "all"
 # To remove files, type "make clean"
 
-CC = gcc
+CC = clang
 CFLAGS = -Wall
 OBJS = wserver.o wclient.o request.o io_helper.o 
 
