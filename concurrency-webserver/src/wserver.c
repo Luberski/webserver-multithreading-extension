@@ -68,9 +68,7 @@ void *do_the_work(void *conn_buf) {
       }
     } else {
       // Handle message
-      printf("handling message, thread:%lu\n", pthread_self());
       request_handle(request);
-      printf("message handled, thread:%lu\n\n", pthread_self());
       close_or_die(request);
     }
   }
@@ -148,10 +146,8 @@ int main(int argc, char *argv[]) {
   while (keepRunning) {
     struct sockaddr_in client_addr;
     int client_len = sizeof(client_addr);
-    printf("accepting\n");
     int conn_fd = accept_or_die(listen_fd, (sockaddr_t *)&client_addr,
                                 (socklen_t *)&client_len);
-    printf("received request\n");
     while (conn_fd != 0) {
       if (pthread_mutex_lock(&buffer_lock) != 0) {
         perror("pthread_mutex_lock() error");
@@ -202,7 +198,6 @@ int main(int argc, char *argv[]) {
       exit(1);
     }
     pthread_join(thread_pool[i], NULL);
-    printf("thread joined\n");
   }
 
   return 0;
