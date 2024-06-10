@@ -71,7 +71,7 @@ typedef struct sockaddr sockaddr_t;
 #define listen_or_die(s, backlog) \
     { assert(listen(s,  backlog) >= 0); }
 #define accept_or_die(s, addr, addrlen) \
-    ({ int rc = accept(s, addr, addrlen); assert(rc >= 0); rc; })
+    ({ int rc = accept(s, addr, addrlen); rc; })
 #define connect_or_die(sockfd, serv_addr, addrlen) \
     { assert(connect(sockfd, serv_addr, addrlen) >= 0); }
 #define gethostbyname_or_die(name) \
