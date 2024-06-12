@@ -27,7 +27,6 @@ int open_client_fd(char *hostname, int port) {
   struct hostent *hp;
   struct sockaddr_in server_addr;
 
-  printf("wtfisthis\n");
   if ((client_fd = socket(AF_INET, SOCK_STREAM, 0)) < 0)
     return -1;
 

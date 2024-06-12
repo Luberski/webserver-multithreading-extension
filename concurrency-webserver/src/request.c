@@ -154,9 +154,7 @@ void request_handle(int fd) {
   char filename[MAXBUF], cgiargs[MAXBUF];
 
   readline_or_die(fd, buf, MAXBUF);
-  printf("after readline\n");
   sscanf(buf, "%s %s %s", method, uri, version);
-  printf("method:%s uri:%s version:%s\n", method, uri, version);
 
   if (strcasecmp(method, "GET")) {
     request_error(fd, method, "501", "Not Implemented",
@@ -164,7 +162,6 @@ void request_handle(int fd) {
     return;
   }
   request_read_headers(fd);
-  printf("after read headers, thread: %lu\n", pthread_self());
 
   is_static = request_parse_uri(uri, filename, cgiargs);
   if (stat(filename, &sbuf) < 0) {
@@ -172,7 +169,6 @@ void request_handle(int fd) {
                   "server could not find this file");
     return;
   }
-  printf("after parse uri, thread: %lu\n", pthread_self());
 
   if (is_static) {
     if (!(S_ISREG(sbuf.st_mode)) || !(S_IRUSR & sbuf.st_mode)) {
@@ -189,5 +185,4 @@ void request_handle(int fd) {
     }
     request_serve_dynamic(fd, filename, cgiargs);
   }
-  printf("after serve, thread: %lu\n", pthread_self());
 }
